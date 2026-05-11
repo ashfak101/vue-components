@@ -13,10 +13,14 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@
 import { Pagination, PaginationList, PaginationPrev, PaginationNext } from '@/components/ui/pagination'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Sidebar } from '@/components/ui/sidebar'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Stack, Grid, Container } from '@/components/ui/layout'
 import { FormItem, FormLabel } from '@/components/ui/form'
+import { Badge } from '@/components/ui/badge'
+import { DataList, DataItem } from '@/components/ui/data-list'
+import { MedicalStat } from '@/components/ui/hms'
 import { Toast } from '@/components/ui/toast'
-import { LayoutDashboard, Users, Settings, Bell, Search, Plus, Info, CheckCircle2, AlertCircle } from 'lucide-vue-next'
+import { LayoutDashboard, Users, Settings, Bell, Search, Plus, Info, CheckCircle2, AlertCircle, Heart, Activity, Thermometer, User, CalendarDays } from 'lucide-vue-next'
 
 const search = ref('')
 const isChecked = ref(false)
@@ -158,6 +162,84 @@ const simulateLoading = () => {
             </CardContent>
           </Card>
           </Grid>
+ 
+          <!-- HMS Specific Section -->
+          <Stack gap="4">
+            <h3 class="text-lg font-semibold px-1">Patient Vitals & Profile</h3>
+            <Grid :cols="4" gap="4">
+              <MedicalStat
+                title="Heart Rate"
+                value="72"
+                unit="bpm"
+                :trend="{ value: '+2%', type: 'up' }"
+                :icon="Heart"
+                class="border-red-100 bg-red-50/30"
+              />
+              <MedicalStat
+                title="Blood Pressure"
+                value="120/80"
+                unit="mmHg"
+                description="Normal range"
+                :icon="Activity"
+                class="border-blue-100 bg-blue-50/30"
+              />
+              <MedicalStat
+                title="Body Temp"
+                value="98.6"
+                unit="°F"
+                :trend="{ value: 'Stable', type: 'neutral' }"
+                :icon="Thermometer"
+                class="border-orange-100 bg-orange-50/30"
+              />
+              <MedicalStat
+                title="Oxygen Level"
+                value="98"
+                unit="%"
+                :trend="{ value: '-1%', type: 'down' }"
+                :icon="Info"
+                class="border-green-100 bg-green-50/30"
+              />
+            </Grid>
+
+            <Card>
+              <CardHeader>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <Avatar size="lg">
+                      <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" />
+                      <AvatarFallback>JD</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <CardTitle>John Doe</CardTitle>
+                      <CardDescription>Patient ID: #PAT-2024-001</CardDescription>
+                    </div>
+                  </div>
+                  <Badge variant="success">Admitted</Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <DataList>
+                  <DataItem label="Age">32 Years</DataItem>
+                  <DataItem label="Blood Group">O+ Positive</DataItem>
+                  <DataItem label="Last Visit">12 May 2024</DataItem>
+                  <DataItem label="Doctor In Charge">
+                    <Select default-value="sarah">
+                      <SelectTrigger class="w-[200px]">
+                        <SelectValue placeholder="Select a doctor" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="sarah">Dr. Sarah Wilson</SelectItem>
+                          <SelectItem value="michael">Dr. Michael Chen</SelectItem>
+                          <SelectItem value="emily">Dr. Emily Adams</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </DataItem>
+                </DataList>
+              </CardContent>
+            </Card>
+          </Stack>
 
         <!-- Components Grid -->
         <Grid :cols="2" gap="8">

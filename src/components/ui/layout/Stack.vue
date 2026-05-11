@@ -17,8 +17,22 @@ const props = withDefaults(defineProps<Props>(), {
   justify: 'start',
 })
 
+const gapMap = {
+  0: 'gap-0',
+  1: 'gap-1',
+  2: 'gap-2',
+  3: 'gap-3',
+  4: 'gap-4',
+  5: 'gap-5',
+  6: 'gap-6',
+  8: 'gap-8',
+  10: 'gap-10',
+  12: 'gap-12',
+  16: 'gap-16',
+}
+
 const directionClass = computed(() => props.direction === 'row' ? 'flex-row' : 'flex-col')
-const gapClass = computed(() => `gap-${props.gap}`)
+const gapClass = computed(() => gapMap[props.gap as keyof typeof gapMap])
 
 const alignClasses = {
   start: 'items-start',
